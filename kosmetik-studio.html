@@ -407,7 +407,7 @@ document.querySelectorAll('.scroll-link').forEach(link => {
   link.addEventListener('click', function(e) {
     
     const currentPath = window.location.pathname;
-    if (currentPath.endsWith('index.html') || currentPath.endsWith('kosmetik-studio.html') || currentPath === '/' || currentPath.endsWith('/lumiere-beauty/')) {
+    if (currentPath.endsWith('kosmetik-studio.html') || currentPath.endsWith('/') || currentPath === '/' || currentPath.endsWith('/lumiere-beauty/')) {
       
       
       const targetId = this.getAttribute('href').split('#')[1];
@@ -415,7 +415,7 @@ document.querySelectorAll('.scroll-link').forEach(link => {
       
       if (targetElement) {
         e.preventDefault(); // Stoppt das Neuladen der Seite
-        targetElement.scrollIntoView({ behavior: 'smooth' }); // Scrollt elegant hin
+        targetElement.scrollIntoView({ behavior: 'smooth' });
         
         
         history.pushState(null, null, `#${targetId}`);
