@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gutscheine - Lumière Beauty Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blush: #F2D9D9; --blush-deep: #E8B8B8; --nude: #F9F0EB;
+    --dark: #1A0F0F; --rose: #C97070; --rose-dark: #A34F4F;
+    --warm-gray: #8A7070; --gold-accent: #D4A96A; --white: #FEFAF8;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position:fixed; top:0; width:100%; z-index:100; padding:1.5rem 5rem; display:flex; align-items:center; justify-content:space-between; background:rgba(254,250,248,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(201,112,112,0.12); transition:box-shadow 0.3s; }
+  nav.scrolled { box-shadow:0 2px 20px rgba(0,0,0,0.06); }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:400; letter-spacing:0.03em; color:var(--dark); text-decoration: none; }
+  .nav-logo span { font-style:italic; color:var(--rose); }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; }
+  .nav-links a { font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--warm-gray); text-decoration:none; font-weight:500; transition:color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--rose); }
+  .nav-btn { background:var(--dark); color:white; border:none; padding:0.65rem 1.8rem; font-family:'DM Sans',sans-serif; font-size:0.78rem; letter-spacing:0.08em; cursor:pointer; text-decoration: none; transition:background 0.2s; display: inline-block; text-align: center; line-height: normal; }
+  .nav-btn:hover { background:var(--rose-dark); }
+
+  /* ANIMATION CORE */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+  /* HERO HEADER */
+  .gift-header { background: var(--nude); padding: 9rem 5rem 5rem; text-align: center; }
+  .gift-header .section-tag { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--rose); display:flex; align-items:center; justify-content:center; gap:1rem; margin-bottom:1.2rem; }
+  .gift-header .section-tag::before, .gift-header .section-tag::after { content:''; display:block; width:2rem; height:1px; background:var(--rose); }
+  .gift-header h1 { font-family:'Playfair Display',serif; font-size: clamp(2.3rem, 4vw, 3.8rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem; }
+  .gift-header h1 em { font-style: italic; color: var(--rose); }
+  .gift-header p { font-size: 1rem; color: var(--warm-gray); font-weight: 300; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+  /* GIFT SECTIONS GENERAL */
+  .gift-section { padding: 5rem 5rem; max-width: 1300px; margin: 0 auto; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 400; text-align: center; margin-bottom: 3rem; }
+  .section-title span { font-style: italic; color: var(--rose); }
+
+  /* VALUE VOUCHERS GRID */
+  .voucher-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+  .voucher-card { background: var(--white); border: 1px solid rgba(201,112,112,0.18); padding: 3.5rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; transition: all 0.4s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.01); }
+  .voucher-card:hover { transform: translateY(-5px); border-color: var(--rose); box-shadow: 0 15px 40px rgba(201,112,112,0.08); }
+  .voucher-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 400; color: var(--warm-gray); margin-bottom: 1rem; letter-spacing: 0.05em; }
+  .voucher-price { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 500; color: var(--dark); margin-bottom: 1.5rem; display: flex; align-items: flex-start; justify-content: center; }
+  .voucher-price span { font-size: 1.5rem; margin-top: 0.5rem; margin-left: 0.2rem; }
+  .voucher-card p { font-size: 0.85rem; color: var(--warm-gray); font-weight: 300; line-height: 1.6; margin-bottom: 2rem; }
+  .voucher-btn { background: transparent; border: 1px solid var(--dark); color: var(--dark); font-family: 'DM Sans', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 2rem; cursor: pointer; font-weight: 500; transition: all 0.2s; text-decoration: none; }
+  .voucher-card:hover .voucher-btn { background: var(--dark); color: white; }
+
+  /* TREATMENT VOUCHERS (Zwei Spalten) */
+  .treatment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .treatment-card { display: grid; grid-template-columns: 1fr 1.2fr; background: var(--white); border: 1px solid rgba(201,112,112,0.12); overflow: hidden; }
+  .treatment-img { width: 100%; height: 100%; object-fit: cover; }
+  .treatment-content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .treatment-content h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .treatment-meta { font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--rose); font-weight: 500; margin-bottom: 1rem; display: block; }
+  .treatment-content p { font-size: 0.88rem; color: var(--warm-gray); font-weight: 300; line-height: 1.7; margin-bottom: 1.5rem; }
+  .treatment-price-row { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(201,112,112,0.1); padding-top: 1.2rem; margin-top: auto; }
+  .treatment-price { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 500; }
+  .select-link { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dark); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--dark); padding-bottom: 0.2rem; transition: color 0.2s, border-color 0.2s; }
+  .select-link:hover { color: var(--rose); border-color: var(--rose); }
+
+  /* ORDER FORM SECTION */
+  .order-section { background: var(--nude); padding: 6rem 2rem; text-align: center; }
+  .form-container { max-width: 650px; margin: 0 auto; background: var(--white); padding: 4rem 3.5rem; border: 1px solid rgba(201,112,112,0.15); box-shadow: 0 20px 50px rgba(0,0,0,0.02); text-align: left; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full-width { grid-column: span 2; }
+  .form-group label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dark); font-weight: 500; }
+  .form-group input, .form-group select, .form-group textarea { border: 1px solid rgba(0,0,0,0.1); padding: 0.8rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: var(--white); outline: none; transition: border-color 0.2s; color: var(--dark); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--rose); }
+  .radio-group { display: flex; gap: 2rem; margin: 0.5rem 0 1.5rem; }
+  .radio-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--warm-gray); cursor: pointer; }
+  .radio-label input { accent-color: var(--rose); }
+  .submit-btn { width: 100%; background: var(--dark); color: white; border: none; padding: 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: background 0.2s; margin-top: 1rem; }
+  .submit-btn:hover { background: var(--rose-dark); }
+
+  /* FOOTER */
+  footer { background:var(--dark); color:rgba(255,255,255,0.5); padding:5rem 5rem 2rem; }
+  .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:3rem; margin-bottom:4rem; }
+  .footer-brand-logo { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin-bottom:1rem; display:block; text-decoration: none; }
+  .footer-brand-logo span { font-style:italic; color:var(--rose); }
+  .footer-brand p { font-size:0.83rem; line-height:1.8; font-weight:300; }
+  .footer-col h4 { font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-accent); margin-bottom:1.5rem; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
+  .footer-col ul li a { font-size:0.83rem; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s; }
+  .footer-col ul li a:hover { color:white; }
+  .footer-col p { font-size:0.83rem; line-height:1.8; font-weight:300; }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:2rem; text-align:center; font-size:0.75rem; opacity:0.3; }
+  .social-row { display:flex; gap:1rem; margin-top:1.5rem; }
+  .social-btn { width:36px; height:36px; border:1px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.75rem; color:rgba(255,255,255,0.4); cursor:pointer; text-decoration:none; transition:all 0.2s; }
+  .social-btn:hover { border-color:var(--rose); color:var(--rose); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 1.5rem 2rem; }
+    .gift-header { padding: 8rem 2rem 4rem; }
+    .gift-section { padding: 4rem 2rem; }
+    .voucher-grid { grid-template-columns: repeat(2, 1fr); }
+    .treatment-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+  @media (max-width: 768px) {
+    .voucher-grid { grid-template-columns: 1fr; }
+    .treatment-card { grid-template-columns: 1fr; }
+    .form-container { padding: 2.5rem 1.5rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full-width { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <a href="kosmetik-studio.html" class="nav-logo">Lumière <span>Beauty</span></a>
+  <ul class="nav-links">
+    <li><a href="leistungen.html">Leistungen</a></li>
+    <li><a href="ueber-uns.html">Über uns</a></li>
+    <li><a href="kosmetik-studio.html#team">Team</a></li>
+    <li><a href="kosmetik-studio.html#gallery">Galerie</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+  <a href="kosmetik-studio.html#booking" class="nav-btn">Termin buchen</a>
+</nav>
+
+<!-- HERO HEADER -->
+<header class="gift-header">
+  <div class="reveal">
+    <span class="section-tag">Zeit für Verwöhnung</span>
+    <h1>Freude und <em>Entspannung</em> schenken</h1>
+    <p>Überrasche deine Liebsten mit einem luxuriösen Treatment in unserem Studio. Wähle einfach einen flexiblen Wertgutschein oder eines unserer sorgsam zusammengestellten Treatment-Pakete.</p>
+  </div>
+</header>
+
+<!-- CLASSIC VALUE VOUCHERS -->
+<section class="gift-section">
+  <h2 class="section-title">Klassische <span>Wertgutscheine</span></h2>
+  <div class="voucher-grid">
+    
+    <!-- 25 Euro -->
+    <div class="voucher-card reveal">
+      <h3>Lumière Petit</h3>
+      <div class="voucher-price">25<span>€</span></div>
+      <p>Perfekt als kleine Aufmerksamkeit für edle Nageldesigns oder ein Wimpern-Styling.</p>
+      <a href="#orderForm" class="voucher-btn" onclick="selectVoucher('Wertgutschein 25 €')">Auswählen</a>
+    </div>
+
+    <!-- 50 Euro -->
+    <div class="voucher-card reveal" style="transition-delay: 0.1s;">
+      <h3>Lumière Classique</h3>
+      <div class="voucher-price">50<span>€</span></div>
+      <p>Unser beliebtester Allrounder. Ideal einlösbar für Maniküren oder Augenbrauen-Liftings.</p>
+      <a href="#orderForm" class="voucher-btn" onclick="selectVoucher('Wertgutschein 50 €')">Auswählen</a>
+    </div>
+
+    <!-- 100 Euro -->
+    <div class="voucher-card reveal" style="transition-delay: 0.2s;">
+      <h3>Lumière Grand Luxe</h3>
+      <div class="voucher-price">100<span>€</span></div>
+      <p>Das Geschenk der puren Erholung. Perfekt für tiefenwirksame Gesichtsbehandlungen.</p>
+      <a href="#orderForm" class="voucher-btn" onclick="selectVoucher('Wertgutschein 100 €')">Auswählen</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- TREATMENT VOUCHERS -->
+<section class="gift-section" style="border-top: 1px solid rgba(201,112,112,0.1); padding-top: 6rem;">
+  <h2 class="section-title">Exklusive <span>Verwöhnpakete</span></h2>
+  <div class="treatment-grid">
+    
+    <!-- Paket 1 -->
+    <div class="treatment-card reveal">
+      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80" alt="Augen Treatment" class="treatment-img">
+      <div class="treatment-content">
+        <span class="treatment-meta">Paket 1 · Augen & Wimpern</span>
+        <h3>Perfect Eyes & Brows</h3>
+        <p>Das Rundum-Sorglos-Paket für einen atemberaubenden Blick: Premium Lash Lifting, Wimpernfärben & Brow Styling.</p>
+        <div class="treatment-price-row">
+          <div class="treatment-price">79 €</div>
+          <a href="#orderForm" class="select-link" onclick="selectVoucher('Paket: Perfect Eyes & Brows (79 €)')">Wählen</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paket 2 -->
+    <div class="treatment-card reveal" style="transition-delay: 0.1s;">
+      <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80" alt="Facial Treatment" class="treatment-img">
+      <div class="treatment-content">
+        <span class="treatment-meta">Paket 2 · Skin Care Luxe</span>
+        <h3>Lumière Signature Glow</h3>
+        <p>Unsere luxuriöse Gesichtsbehandlung: Tiefenreinigung, sanftes Enzympeeling, hochdosiertes Hyaluronserum & entspannende Gesichtsmassage.</p>
+        <div class="treatment-price-row">
+          <div class="treatment-price">115 €</div>
+          <a href="#orderForm" class="select-link" onclick="selectVoucher('Paket: Lumière Signature Glow (115 €)')">Wählen</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- INTERACTIVE ORDER FORM -->
+<section class="order-section" id="orderForm">
+  <div class="reveal">
+    <h2 class="section-title">Gutschein <span>bestellen</span></h2>
+    <div class="form-container">
+      <form action="#" method="POST" onsubmit="alert('Vielen Dank! Ihre Gutscheinbestellung ist eingegangen. Wir senden Ihnen die Details per E-Mail.'); return false;">
+        
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="voucherSelect">Gewählter Gutschein</label>
+            <select id="voucherSelect" required>
+              <option value="" disabled selected>Bitte wählen Sie eine Option...</option>
+              <option value="Wertgutschein 25 €">Wertgutschein 25 €</option>
+              <option value="Wertgutschein 50 €">Wertgutschein 50 €</option>
+              <option value="Wertgutschein 100 €">Wertgutschein 100 €</option>
+              <option value="Paket: Perfect Eyes & Brows (79 €)">Paket: Perfect Eyes & Brows (79 €)</option>
+              <option value="Paket: Lumière Signature Glow (115 €)">Paket: Lumière Signature Glow (115 €)</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Versandart</label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="shipping" value="pdf" checked> Digital (PDF per E-Mail zum Ausdrucken)</label>
+              <label class="radio-label"><input type="radio" name="shipping" value="post"> Premium-Postversand (+ 3,50 €)</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fname">Vorname</label>
+            <input type="text" id="fname" required placeholder="Ihr Vorname">
+          </div>
+          <div class="form-group">
+            <label for="lname">Nachname</label>
+            <input type="text" id="lname" required placeholder="Ihr Nachname">
+          </div>
+          
+          <div class="form-group">
+            <label for="email">E-Mail-Adresse</label>
+            <input type="email" id="email" required placeholder="ihre@email.de">
+          </div>
+          <div class="form-group">
+            <label for="phone">Telefonnummer</label>
+            <input type="tel" id="phone" placeholder="Für eventuelle Rückfragen">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="message">Persönliche Widmung (Optional)</label>
+            <textarea id="message" rows="3" placeholder="Für wen ist der Gutschein und möchtest du einen kurzen Grußtext aufgedruckt haben?"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Gutschein zahlungspflichtig bestellen</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="kosmetik-studio.html" class="footer-brand-logo">Lumière <span>Beauty</span></a>
+      <p>Premium Kosmetikstudio für anspruchsvolle Beauty-Treatments. Ihr Wohlort in der Innenstadt.</p>
+      <div class="social-row">
+        <a class="social-btn" href="#">IG</a><a class="social-btn" href="#">FB</a>
+        <a class="social-btn" href="#">TT</a><a class="social-btn" href="#">★</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Leistungen</h4>
+      <ul>
+        <li><a href="leistungen.html">Gesichtsbehandlung</a></li><li><a href="leistungen.html">Wimpern & Augen</a></li>
+        <li><a href="leistungen.html">Nails & Maniküre</a></li><li><a href="leistungen.html">Körperpflege</a></li><li><a href="leistungen.html">Anti-Aging</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+  <h4>Studio</h4>
+  <ul>
+    <li><a href="ueber-uns.html">Über uns</a></li>
+    <li><a href="index.html#team" class="scroll-link">Unser Team</a></li>
+    <li><a href="index.html#gallery" class="scroll-link">Galerie</a></li>
+    <li><a href="gutscheine.html">Gutscheine</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+</div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <p>Schönheitsgasse 7<br>12345 Musterstadt<br><br>+49 (0) 123 456 780<br>hallo@lumiere-beauty.de</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2024 Lumière Beauty Studio · Impressum · Datenschutz · AGB</div>
+</footer>
+
+<!-- JAVASCRIPT FOR SCROLL ANIMATIONS AND DYNAMIC SELECT -->
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+  const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Funktion, um den ausgewählten Gutschein automatisch in das Formular einzutragen
+  function selectVoucher(voucherName) {
+    document.getElementById('voucherSelect').value = voucherName;
+  }
+</script>
+</body>
+</html>

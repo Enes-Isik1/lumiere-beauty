@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumière Beauty Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blush: #F2D9D9; --blush-deep: #E8B8B8; --nude: #F9F0EB;
+    --dark: #1A0F0F; --rose: #C97070; --rose-dark: #A34F4F;
+    --warm-gray: #8A7070; --gold-accent: #D4A96A; --white: #FEFAF8;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position:fixed; top:0; width:100%; z-index:100; padding:1.5rem 5rem; display:flex; align-items:center; justify-content:space-between; background:rgba(254,250,248,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(201,112,112,0.12); transition:box-shadow 0.3s; }
+  nav.scrolled { box-shadow:0 2px 20px rgba(0,0,0,0.06); }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:400; letter-spacing:0.03em; color:var(--dark); text-decoration: none; }
+  .nav-logo span { font-style:italic; color:var(--rose); }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; }
+  .nav-links a { font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--warm-gray); text-decoration:none; font-weight:500; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--rose); }
+  .nav-btn { background:var(--dark); color:white; border:none; padding:0.65rem 1.8rem; font-family:'DM Sans',sans-serif; font-size:0.78rem; letter-spacing:0.08em; cursor:pointer; text-decoration: none; transition:background 0.2s; display: inline-block; text-align: center; line-height: normal; }
+  .nav-btn:hover { background:var(--rose-dark); }
+
+  /* HERO */
+  .hero { min-height:100vh; display:grid; grid-template-columns:5fr 4fr; padding-top:5rem; background:var(--nude); }
+  .hero-content { padding:6rem 4rem 6rem 6rem; display:flex; flex-direction:column; justify-content:center; }
+  .hero-tag { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--rose); margin-bottom:2rem; }
+  .hero-tag::before { content:''; display:block; width:2rem; height:1px; background:var(--rose); }
+  .hero-title { font-family:'Playfair Display',serif; font-size:clamp(3rem,4.5vw,5.5rem); font-weight:400; line-height:1.1; margin-bottom:1.5rem; }
+  .hero-title em { font-style:italic; color:var(--rose); display:block; }
+  .hero-sub { font-size:0.95rem; line-height:1.9; color:var(--warm-gray); max-width:40ch; font-weight:300; margin-bottom:3rem; }
+  .hero-btns { display:flex; gap:1rem; }
+  .btn-dark { background:var(--dark); color:white; border:none; padding:0.9rem 2.5rem; font-family:'DM Sans',sans-serif; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; text-decoration: none; display: inline-block; }
+  .btn-dark:hover { background:var(--rose-dark); }
+  .btn-outline { background:transparent; color:var(--dark); border:1px solid rgba(26,15,15,0.3); padding:0.9rem 2.5rem; font-family:'DM Sans',sans-serif; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; text-decoration: none; display: inline-block; }
+  .btn-outline:hover { border-color:var(--rose); color:var(--rose); }
+  .hero-stats { margin-top:4rem; display:flex; gap:3rem; padding-top:2.5rem; border-top:1px solid rgba(201,112,112,0.2); }
+  .stat-num { font-family:'Playfair Display',serif; font-size:2rem; font-weight:400; color:var(--rose); }
+  .stat-label { font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--warm-gray); margin-top:0.2rem; }
+
+  .hero-right { position:relative; overflow:hidden; }
+  .hero-right img { width:100%; height:100%; object-fit:cover; display:block; }
+  .hero-right::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom, transparent 60%, rgba(242,217,217,0.3)); pointer-events:none; }
+  .floating-badge { position:absolute; top:3rem; right:-1rem; background:white; padding:1rem 1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.1); font-size:0.78rem; font-weight:500; z-index:2; }
+  .floating-badge .rating { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--rose); display:block; margin-bottom:0.2rem; }
+
+  /* SERVICES */
+  .services { padding:8rem 5rem; }
+  .section-header { text-align:center; margin-bottom:4rem; }
+  .section-tag { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--rose); display:flex; align-items:center; justify-content:center; gap:1rem; margin-bottom:1.2rem; }
+  .section-tag::before, .section-tag::after { content:''; display:block; width:2rem; height:1px; background:var(--rose); }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,3vw,3.2rem); font-weight:400; line-height:1.2; }
+  .section-title em { font-style:italic; color:var(--rose); }
+  .services-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(201,112,112,0.15); }
+  .service-card { background:var(--white); overflow:hidden; transition:background 0.3s; position:relative; }
+  .service-card::after { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--rose); transition:width 0.4s; }
+  .service-card:hover { background:var(--nude); }
+  .service-card:hover::after { width:100%; }
+  .service-card img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; transition:transform 0.5s; }
+  .service-card:hover img { transform:scale(1.05); }
+  .service-card-body { padding:1.8rem 1.8rem 2rem; }
+  .service-name { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.6rem; font-weight:500; }
+  .service-desc { font-size:0.82rem; line-height:1.7; color:var(--warm-gray); font-weight:300; margin-bottom:1.2rem; }
+  .service-from { font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--warm-gray); }
+  .service-price { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--rose); }
+
+  /* ABOUT STRIP */
+  .about-strip { display:grid; grid-template-columns:1fr 1fr; background:var(--dark); }
+  .about-strip-img { position:relative; overflow:hidden; min-height:500px; }
+  .about-strip-img img { width:100%; height:100%; object-fit:cover; display:block; opacity:0.7; transition:transform 0.8s ease; }
+  .about-strip-img:hover img { transform:scale(1.04); }
+  .about-strip-content { padding:5rem 4rem; display:flex; flex-direction:column; justify-content:center; }
+  .about-strip-content .section-tag { justify-content:flex-start; color:var(--gold-accent); }
+  .about-strip-content .section-tag::before, .about-strip-content .section-tag::after { background:var(--gold-accent); }
+  .about-strip-content .section-title { color:white; margin-bottom:1.5rem; }
+  .about-strip-content p { font-size:0.93rem; line-height:1.9; color:rgba(255,255,255,0.55); font-weight:300; margin-bottom:1rem; }
+  .about-strip-content .btn-outline { border-color:rgba(255,255,255,0.3); color:white; margin-top:1.5rem; }
+  .about-strip-content .btn-outline:hover { border-color:var(--gold-accent); color:var(--gold-accent); }
+
+  /* TEAM */
+  .team { padding:7rem 5rem; background:var(--nude); }
+  .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1000px; margin:0 auto; }
+  .team-card { text-align:center; }
+  .team-avatar { width:100%; aspect-ratio:3/4; overflow:hidden; margin-bottom:1.5rem; }
+  .team-avatar img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s; }
+  .team-card:hover .team-avatar img { transform:scale(1.05); }
+  .team-name { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.3rem; }
+  .team-role { font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--rose); }
+  .team-spec { font-size:0.82rem; color:var(--warm-gray); margin-top:0.5rem; font-weight:300; }
+
+  /* TREATMENTS */
+  .treatments { padding:7rem 5rem; }
+  .treatments-grid { display:grid; grid-template-columns:1fr 2fr; gap:5rem; align-items:start; max-width:1100px; margin:0 auto; }
+  .treatment-tabs { display:flex; flex-direction:column; gap:0; }
+  .tab { padding:1.2rem 1.5rem; border-left:2px solid rgba(201,112,112,0.2); cursor:pointer; transition:all 0.2s; }
+  .tab.active { border-left-color:var(--rose); background:var(--nude); }
+  .tab-name { font-size:0.88rem; font-weight:500; color:var(--dark); margin-bottom:0.2rem; }
+  .tab-price { font-size:0.75rem; color:var(--warm-gray); }
+  .treatment-detail { background:var(--nude); padding:3rem; }
+  .treatment-detail img { width:100%; aspect-ratio:16/9; object-fit:cover; margin-bottom:2rem; display:block; }
+  .treatment-title { font-family:'Playfair Display',serif; font-size:2rem; font-style:italic; margin-bottom:1rem; color:var(--dark); }
+  .treatment-text { font-size:0.9rem; line-height:1.9; color:var(--warm-gray); margin-bottom:1.5rem; font-weight:300; }
+  .treatment-includes { display:flex; flex-direction:column; gap:0.6rem; margin-bottom:2rem; }
+  .treatment-item { font-size:0.82rem; color:var(--dark); display:flex; gap:0.8rem; align-items:center; }
+  .treatment-item::before { content:'✓'; color:var(--rose); font-weight:700; }
+  .treatment-price-big { font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--rose); display:block; margin-bottom:1.5rem; }
+  .treatment-duration { font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--warm-gray); margin-bottom:1.5rem; display:block; }
+
+  /* BOOKING */
+  .booking { padding:7rem 5rem; background:var(--blush); display:grid; grid-template-columns:1fr 1fr; gap:6rem; max-width:1200px; margin:0 auto; }
+  .booking-info .section-tag { justify-content:flex-start; }
+  .opening-hours { margin-top:2rem; }
+  .oh-day { display:flex; justify-content:space-between; padding:0.8rem 0; border-bottom:1px solid rgba(201,112,112,0.2); font-size:0.85rem; }
+  .oh-day span:first-child { color:var(--warm-gray); }
+  .oh-day span:last-child { font-weight:500; color:var(--dark); }
+  .booking-form { display:flex; flex-direction:column; gap:1rem; background:white; padding:2.5rem; }
+  .booking-form h3 { font-family:'Playfair Display',serif; font-size:1.4rem; font-style:italic; margin-bottom:0.5rem; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .fg { display:flex; flex-direction:column; gap:0.4rem; }
+  .fg label { font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--warm-gray); }
+  .fg input, .fg select, .fg textarea { border:1px solid rgba(0,0,0,0.1); padding:0.75rem 1rem; font-family:'DM Sans',sans-serif; font-size:0.88rem; outline:none; transition:border-color 0.2s; background:var(--white); }
+  .fg input:focus, .fg select:focus { border-color:var(--rose); }
+  .fg textarea { resize:vertical; min-height:80px; }
+
+  /* GALLERY */
+  .gallery { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:250px 250px; }
+  .gallery-item { overflow:hidden; position:relative; }
+  .gallery-item:first-child { grid-row:span 2; }
+  .gallery-item:nth-child(3) { grid-column:span 2; }
+  .gallery-item:nth-child(5) { grid-column:span 2; }
+  .gallery-item img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.6s ease, filter 0.4s; filter:brightness(0.9); }
+  .gallery-item:hover img { transform:scale(1.08); filter:brightness(1); }
+  .gallery-overlay { position:absolute; inset:0; background:rgba(26,15,15,0); transition:background 0.3s; display:flex; align-items:center; justify-content:center; }
+  .gallery-item:hover .gallery-overlay { background:rgba(26,15,15,0.35); }
+  .gallery-overlay span { color:white; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; opacity:0; transition:opacity 0.3s; }
+  .gallery-item:hover .gallery-overlay span { opacity:1; }
+
+  /* FOOTER */
+  footer { background:var(--dark); color:rgba(255,255,255,0.5); padding:5rem 5rem 2rem; }
+  .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:3rem; margin-bottom:4rem; }
+  .footer-brand-logo { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin-bottom:1rem; display:block; text-decoration: none; }
+  .footer-brand-logo span { font-style:italic; color:var(--rose); }
+  .footer-brand p { font-size:0.83rem; line-height:1.8; font-weight:300; }
+  .footer-col h4 { font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-accent); margin-bottom:1.5rem; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
+  .footer-col ul li a { font-size:0.83rem; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s; }
+  .footer-col ul li a:hover { color:white; }
+  .footer-col p { font-size:0.83rem; line-height:1.8; font-weight:300; }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:2rem; text-align:center; font-size:0.75rem; opacity:0.3; }
+  .social-row { display:flex; gap:1rem; margin-top:1.5rem; }
+  .social-btn { width:36px; height:36px; border:1px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.75rem; color:rgba(255,255,255,0.4); cursor:pointer; text-decoration:none; transition:all 0.2s; }
+  .social-btn:hover { border-color:var(--rose); color:var(--rose); }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">Lumière <span>Beauty</span></a>
+  <ul class="nav-links">
+    <li><a href="leistungen.html">Leistungen</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#gallery">Galerie</a></li>
+    <li><a href="#booking">Buchung</a></li>
+  </ul>
+  <a href="#booking" class="nav-btn">Termin buchen</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">Premium Kosmetikstudio</span>
+    <h1 class="hero-title">Deine Schönheit,<br><em>neu erlebt.</em></h1>
+    <p class="hero-sub">Maßgeschneiderte Beauty-Treatments für jede Haut und jeden Anlass – von erfahrenen Expertinnen mit Herz.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-dark">Termin vereinbaren</a>
+      <a href="leistungen.html" class="btn-outline">Leistungen entdecken</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">1.200+</div><div class="stat-label">Zufriedene Kundinnen</div></div>
+      <div><div class="stat-num">12</div><div class="stat-label">Experten im Team</div></div>
+      <div><div class="stat-num">5★</div><div class="stat-label">Durchschnittsbewertung</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=900&q=80" alt="Kosmetikbehandlung">
+    <div class="floating-badge">
+      <span class="rating">★ 4.9</span>
+      Über 350 Google-Bewertungen
+    </div>
+  </div>
+</section>
+
+<section class="services" id="overview">
+  <div class="section-header">
+    <div class="section-tag">Unsere Leistungen</div>
+    <h2 class="section-title">Beauty-Treatments für<br><em>jede Haut</em></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80" alt="Gesichtsbehandlung">
+      <div class="service-card-body">
+        <h3 class="service-name">Gesichtsbehandlung</h3>
+        <p class="service-desc">Tiefenreinigende und aufbauende Treatments für ein strahlendes Hautbild – abgestimmt auf Ihren Hauttyp.</p>
+        <div class="service-from">ab <span class="service-price">€ 65</span></div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80" alt="Nails Maniküre">
+      <div class="service-card-body">
+        <h3 class="service-name">Nails & Maniküre</h3>
+        <p class="service-desc">Klassische Pflege, Gel-Nails, Nail Art – für gepflegte Hände und perfekte Nägel zu jedem Anlass.</p>
+        <div class="service-from">ab <span class="service-price">€ 35</span></div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80" alt="Wimpern Augen">
+      <div class="service-card-body">
+        <h3 class="service-name">Augen & Wimpern</h3>
+        <p class="service-desc">Wimpernverlängerungen, Lash-Lifting, Augenbrauen-Styling für einen ausdrucksstarken Blick.</p>
+        <div class="service-from">ab <span class="service-price">€ 55</span></div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80" alt="Körperpflege Massage">
+      <div class="service-card-body">
+        <h3 class="service-name">Körperpflege</h3>
+        <p class="service-desc">Peelings, Massagen und Bodywraps für eine verwöhnte, seidige Haut von Kopf bis Fuß.</p>
+        <div class="service-from">ab <span class="service-price">€ 75</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-strip">
+  <div class="about-strip-img">
+    <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=900&q=80" alt="Beauty Studio Atmosphäre">
+  </div>
+  <div class="about-strip-content">
+    <div class="section-tag">Über Lumière</div>
+    <h2 class="section-title">Schönheit mit <em>Expertise</em></h2>
+    <p>Lumière Beauty wurde 2014 von Lena Hoffmann gegründet – mit der Vision, ein Studio zu schaffen, das Professionalität und echte Wohlfühlatmosphäre vereint.</p>
+    <p>Unser Team ist laufend geschult und arbeitet ausschließlich mit hochwertigen, dermatologisch getesteten Produkten. Jede Behandlung wird individuell auf Ihre Haut abgestimmt.</p>
+    <button class="btn-outline">Mehr über uns</button>
+  </div>
+</section>
+
+<section class="team" id="team">
+  <div class="section-header">
+    <div class="section-tag">Unser Team</div>
+    <h2 class="section-title">Ihre <em>Beauty-Expertinnen</em></h2>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=500&q=80" alt="Lena Hoffmann"></div>
+      <h3 class="team-name">Lena Hoffmann</h3>
+      <p class="team-role">Gründerin & Senior Kosmetikerin</p>
+      <p class="team-spec">Spezialisierung: Anti-Aging, Skin Care</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=500&q=80" alt="Sophie Weber"></div>
+      <h3 class="team-name">Sophie Weber</h3>
+      <p class="team-role">Wimpern & Nail Specialist</p>
+      <p class="team-spec">Spezialisierung: Lash Extensions, Gel Nails</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://images.unsplash.com/photo-1695527081848-1e46c06e6458?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jana Müller"></div>
+      <h3 class="team-name">Jana Müller</h3>
+      <p class="team-role">Kosmetikerin & Massagetherapeutin</p>
+      <p class="team-spec">Spezialisierung: Körperbehandlungen</p>
+    </div>
+  </div>
+</section>
+
+<section class="treatments">
+  <div class="section-header">
+    <div class="section-tag">Preisliste</div>
+    <h2 class="section-title">Ausgewählte <em>Treatments</em></h2>
+  </div>
+  <div class="treatments-grid">
+    <div class="treatment-tabs">
+      <div class="tab active"><div class="tab-name">Signature Facial</div><div class="tab-price">ab € 95</div></div>
+      <div class="tab"><div class="tab-name">Lash Lifting</div><div class="tab-price">ab € 65</div></div>
+      <div class="tab"><div class="tab-name">Full Body Scrub</div><div class="tab-price">ab € 85</div></div>
+      <div class="tab"><div class="tab-name">Gel Manicure</div><div class="tab-price">ab € 45</div></div>
+      <div class="tab"><div class="tab-name">Anti-Aging Treatment</div><div class="tab-price">ab € 120</div></div>
+    </div>
+    <div class="treatment-detail">
+      <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80" alt="Signature Facial">
+      <h3 class="treatment-title">Lumière Signature Facial</h3>
+      <p class="treatment-text">Unser exklusives Treatment kombiniert modernste Microdermabrasion mit tiefer Feuchtigkeitspflege – sichtbar strahlend schon nach der ersten Anwendung.</p>
+      <div class="treatment-includes">
+        <div class="treatment-item">Tiefenreinigung und Dampfbad</div>
+        <div class="treatment-item">Microdermabrasion mit Diamantkopf</div>
+        <div class="treatment-item">Individuelles Serum und Mask</div>
+        <div class="treatment-item">Gesichts-Drainage-Massage</div>
+        <div class="treatment-item">Abschlusspflege mit LSF</div>
+      </div>
+      <span class="treatment-duration">⏱ Dauer: 75 Minuten</span>
+      <span class="treatment-price-big">€ 95</span>
+      <a href="#booking" class="btn-dark">Jetzt buchen</a>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="booking-info">
+    <div class="section-tag" style="justify-content:flex-start;">Termin</div>
+    <h2 class="section-title">Ihren Termin<br><em>vereinbaren</em></h2>
+    <p style="font-size:0.9rem; line-height:1.8; color:var(--warm-gray); margin-top:1rem; font-weight:300;">Buchen Sie bequem online – wir bestätigen Ihren Termin innerhalb von 24 Stunden per E-Mail.</p>
+    <div class="opening-hours">
+      <div class="oh-day"><span>Montag</span><span>Ruhetag</span></div>
+      <div class="oh-day"><span>Di – Fr</span><span>09:00 – 19:00 Uhr</span></div>
+      <div class="oh-day"><span>Samstag</span><span>09:00 – 17:00 Uhr</span></div>
+      <div class="oh-day"><span>Sonntag</span><span>nach Vereinbarung</span></div>
+    </div>
+  </div>
+  <div class="booking-form">
+    <h3>Termin buchen</h3>
+    <p style="font-size:0.8rem; color:var(--warm-gray); margin-bottom:0.5rem;">Kostenlos und unverbindlich</p>
+    <div class="form-row">
+      <div class="fg"><label>Vorname</label><input type="text" placeholder="Anna"></div>
+      <div class="fg"><label>Nachname</label><input type="text" placeholder="Müller"></div>
+    </div>
+    <div class="fg"><label>Telefon / E-Mail</label><input type="text" placeholder="+49 oder ihre@email.de"></div>
+    <div class="fg"><label>Behandlung</label>
+      <select>
+        <option>Signature Facial – € 95</option>
+        <option>Gesichtsbehandlung – ab € 65</option>
+        <option>Lash Lifting – € 65</option>
+        <option>Gel Manicure – ab € 45</option>
+        <option>Body Scrub – ab € 85</option>
+        <option>Anti-Aging Treatment – ab € 120</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Wunschdatum</label><input type="date"></div>
+      <div class="fg"><label>Wunschuhrzeit</label>
+        <select>
+          <option>09:00 Uhr</option><option>10:00 Uhr</option><option>11:00 Uhr</option>
+          <option>13:00 Uhr</option><option>14:00 Uhr</option><option>15:00 Uhr</option><option>16:00 Uhr</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Anmerkungen</label><textarea placeholder="Allergien, Wünsche oder Fragen..."></textarea></div>
+    <button class="btn-dark" style="margin-top:0.5rem; padding:1rem; width:100%;">Termin anfragen →</button>
+  </div>
+</section>
+
+<div class="gallery" id="gallery">
+  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=700&q=80" alt="Studio"><div class="gallery-overlay"><span>Studio</span></div></div>
+  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=500&q=80" alt="Makeup"><div class="gallery-overlay"><span>Makeup</span></div></div>
+  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=700&q=80" alt="Nails"><div class="gallery-overlay"><span>Nails</span></div></div>
+  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=500&q=80" alt="Produkte"><div class="gallery-overlay"><span>Produkte</span></div></div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Atmosphäre">
+    <div class="gallery-overlay"><span>Atmosphäre</span></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-brand-logo">Lumière <span>Beauty</span></a>
+      <p>Premium Kosmetikstudio für anspruchsvolle Beauty-Treatments. Ihr Wohlwohlort in der Innenstadt.</p>
+      <div class="social-row">
+        <a class="social-btn" href="#">IG</a><a class="social-btn" href="#">FB</a>
+        <a class="social-btn" href="#">TT</a><a class="social-btn" href="#">★</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Leistungen</h4>
+      <ul>
+        <li><a href="leistungen.html">Gesichtsbehandlung</a></li>
+        <li><a href="leistungen.html">Wimpern & Augen</a></li>
+        <li><a href="leistungen.html">Nails & Maniküre</a></li>
+        <li><a href="leistungen.html">Körperpflege</a></li>
+        <li><a href="leistungen.html">Anti-Aging</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+  <h4>Studio</h4>
+  <ul>
+    <li><a href="ueber-uns.html">Über uns</a></li>
+    <li><a href="index.html#team" class="scroll-link">Unser Team</a></li>
+    <li><a href="index.html#gallery" class="scroll-link">Galerie</a></li>
+    <li><a href="gutscheine.html">Gutscheine</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+</div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <p>Schönheitsgasse 7<br>12345 Musterstadt<br><br>+49 (0) 123 456 780<br>hallo@lumiere-beauty.de</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2024 Lumière Beauty Studio · Impressum · Datenschutz · AGB</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+document.querySelectorAll('.scroll-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    
+    const currentPath = window.location.pathname;
+    if (currentPath.endsWith('index.html') || currentPath.endsWith('kosmetik-studio.html') || currentPath === '/' || currentPath.endsWith('/lumiere-beauty/')) {
+      
+      
+      const targetId = this.getAttribute('href').split('#')[1];
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        e.preventDefault(); // Stoppt das Neuladen der Seite
+        targetElement.scrollIntoView({ behavior: 'smooth' }); // Scrollt elegant hin
+        
+        
+        history.pushState(null, null, `#${targetId}`);
+      }
+    }
+  });
+});
+
+</script>
+</body>
+</html>

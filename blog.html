@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog - Lumière Beauty Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blush: #F2D9D9; --blush-deep: #E8B8B8; --nude: #F9F0EB;
+    --dark: #1A0F0F; --rose: #C97070; --rose-dark: #A34F4F;
+    --warm-gray: #8A7070; --gold-accent: #D4A96A; --white: #FEFAF8;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1.5rem 5rem; display: flex; align-items: center; justify-content: space-between; background: rgba(254, 250, 248, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201, 112, 112, 0.12); transition: box-shadow 0.3s; }
+  nav.scrolled { box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; letter-spacing: 0.03em; color: var(--dark); text-decoration: none; }
+  .nav-logo span { font-style: italic; color: var(--rose); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--rose); }
+  .nav-btn { background: var(--dark); color: white; border: none; padding: 0.65rem 1.8rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.08em; cursor: pointer; text-decoration: none; transition: background 0.2s; display: inline-block; text-align: center; line-height: normal; }
+  .nav-btn:hover { background: var(--rose-dark); }
+
+  /* ANIMATION CORE */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+  /* BLOG HEADER */
+  .blog-header { background: var(--nude); padding: 9rem 5rem 4rem; text-align: center; }
+  .blog-header .section-tag { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose); display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.2rem; }
+  .blog-header .section-tag::before, .blog-header .section-tag::after { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose); }
+  .blog-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 400; line-height: 1.2; }
+  .blog-header h1 em { font-style: italic; color: var(--rose); }
+
+  /* FEATURED POST */
+  .featured-section { padding: 4rem 5rem 2rem; max-width: 1300px; margin: 0 auto; }
+  .featured-card { display: grid; grid-template-columns: 1.2fr 1fr; background: var(--white); border: 1px solid rgba(201, 112, 112, 0.15); overflow: hidden; }
+  .featured-img-box { overflow: hidden; position: relative; aspect-ratio: 16/10; }
+  .featured-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .featured-card:hover .featured-img-box img { transform: scale(1.03); }
+  .featured-content { padding: 4rem; display: flex; flex-direction: column; justify-content: center; }
+  .post-meta { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 1rem; display: block; }
+  .post-meta span { color: var(--rose); font-weight: 500; }
+  .featured-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 400; line-height: 1.3; margin-bottom: 1.2rem; }
+  .featured-title a { color: var(--dark); text-decoration: none; transition: color 0.2s; }
+  .featured-title a:hover { color: var(--rose); }
+  .post-excerpt { font-size: 0.92rem; line-height: 1.8; color: var(--warm-gray); font-weight: 300; margin-bottom: 2rem; }
+  .read-more { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dark); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+  .read-more::after { content: '→'; transition: transform 0.2s; }
+  .read-more:hover { color: var(--rose); }
+  .read-more:hover::after { transform: translateX(4px); }
+
+  /* BLOG GRID */
+  .blog-grid-section { padding: 4rem 5rem 8rem; max-width: 1300px; margin: 0 auto; }
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem 2.5rem; }
+  .blog-card { background: var(--white); display: flex; flex-direction: column; }
+  .blog-img-box { overflow: hidden; aspect-ratio: 4/3; margin-bottom: 1.5rem; }
+  .blog-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .blog-card:hover .blog-img-box img { transform: scale(1.04); }
+  .blog-card h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 500; line-height: 1.4; margin-bottom: 1rem; }
+  .blog-card h2 a { color: var(--dark); text-decoration: none; transition: color 0.2s; }
+  .blog-card h2 a:hover { color: var(--rose); }
+
+  /* NEWSLETTER STRIP */
+  .newsletter-strip { background: var(--blush); padding: 5rem 2rem; text-align: center; }
+  .newsletter-strip h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .newsletter-strip h3 em { font-style: italic; color: var(--rose-dark); }
+  .newsletter-strip p { font-size: 0.88rem; color: var(--warm-gray); margin-bottom: 2rem; font-weight: 300; }
+  .newsletter-form { display: flex; justify-content: center; gap: 0.5rem; max-width: 450px; margin: 0 auto; }
+  .newsletter-form input { border: 1px solid rgba(0,0,0,0.1); padding: 0.75rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; outline: none; background: var(--white); flex: 1; }
+  .newsletter-form button { background: var(--dark); color: white; border: none; padding: 0.75rem 1.8rem; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .newsletter-form button:hover { background: var(--rose-dark); }
+
+  /* FOOTER */
+  footer { background: var(--dark); color: rgba(255,255,255,0.5); padding: 5rem 5rem 2rem; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 4rem; }
+  .footer-brand-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: white; margin-bottom: 1rem; display: block; text-decoration: none; }
+  .footer-brand-logo span { font-style: italic; color: var(--rose); }
+  .footer-brand p { font-size: 0.83rem; line-height: 1.8; font-weight: 300; }
+  .footer-col h4 { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-accent); margin-bottom: 1.5rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col ul li a { font-size: 0.83rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: white; }
+  .footer-col p { font-size: 0.83rem; line-height: 1.8; font-weight: 300; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; text-align: center; font-size: 0.75rem; opacity: 0.3; }
+  .social-row { display: flex; gap: 1rem; margin-top: 1.5rem; }
+  .social-btn { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: rgba(255,255,255,0.4); cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  .social-btn:hover { border-color: var(--rose); color: var(--rose); }
+
+  /* RESPONSIVE */
+  @media (max-width: 968px) {
+    nav { padding: 1.5rem 2rem; }
+    .blog-header { padding: 8rem 2rem 3rem; }
+    .featured-section, .blog-grid-section { padding: 2rem; }
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-content { padding: 2.5rem; }
+    .blog-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+  @media (max-width: 640px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .newsletter-form { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <a href="kosmetik-studio.html" class="nav-logo">Lumière <span>Beauty</span></a>
+  <ul class="nav-links">
+    <li><a href="leistungen.html">Leistungen</a></li>
+    <li><a href="ueber-uns.html">Über uns</a></li>
+    <li><a href="kosmetik-studio.html#team">Team</a></li>
+    <li><a href="kosmetik-studio.html#gallery">Galerie</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+  </ul>
+  <a href="kosmetik-studio.html#booking" class="nav-btn">Termin buchen</a>
+</nav>
+
+<!-- BLOG HERO HEADER -->
+<header class="blog-header">
+  <div class="reveal">
+    <span class="section-tag">Lumière Journal</span>
+    <h1>Einblicke, Tipps & <em>Beauty-Secrets</em></h1>
+  </div>
+</header>
+
+<!-- FEATURED POST -->
+<section class="featured-section reveal">
+  <div class="featured-card">
+    <div class="featured-img-box">
+      <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1000&q=80" alt="Hautpflege im Frühling">
+    </div>
+    <div class="featured-content">
+      <span class="post-meta">In <span>Skin Care</span> · 12. Mai 2026</span>
+      <h2 class="featured-title"><a href="blog-post.html">Der ultimative Guide für den perfekten „Glow“ im Frühling</a></h2>
+      <p class="post-excerpt">Unsere Haut erwacht aus dem Winterschlaf. Erfahren Sie, welche Wirkstoffe jetzt unverzichtbar sind und wie Sie Ihre Pflegeroutine perfekt auf die wärmere Jahreszeit umstellen.</p>
+      <a href="blog-post.html" class="read-more">Artikel lesen</a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG GRID -->
+<section class="blog-grid-section">
+  <div class="blog-grid">
+
+    <!-- Artikel 1 -->
+    <div class="blog-card reveal">
+      <div class="blog-img-box">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80" alt="Lash Lifting Tipps">
+      </div>
+      <span class="post-meta">In <span>Augen & Wimpern</span> · 28. April 2026</span>
+      <h2><a href="blog-post-lash.html">Lash Lifting vs. Extensions: Was passt wirklich zu dir?</a></h2>
+      <p class="post-excerpt">Beide Treatments zaubern einen wachen Blick. Wir erklären die Unterschiede bei Haltbarkeit, Pflegeaufwand und Look.</p>
+      <a href="blog-post-lash.html" class="read-more">Artikel lesen</a>
+    </div>
+
+    <!-- Artikel 2 -->
+    <div class="blog-card reveal" style="transition-delay: 0.1s;">
+      <div class="blog-img-box">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80" alt="Nageltrends">
+      </div>
+      <span class="post-meta">In <span>Nails</span> · 15. April 2026</span>
+      <h2><a href="blog-post-nails.html">Minimalist Nail Art: Die elegantesten Nageltrends der Saison</a></h2>
+      <p class="post-excerpt">Weniger ist mehr. Entdecken Sie dezente geometrische Formen und zarte Nude-Nuancen für perfekt gepflegte Hände.</p>
+      <a href="blog-post-nails.html" class="read-more">Artikel lesen</a>
+    </div>
+
+    <!-- Artikel 3 -->
+    <div class="blog-card reveal" style="transition-delay: 0.2s;">
+      <div class="blog-img-box">
+        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&q=80" alt="Hyaluronsäure Guide">
+      </div>
+      <span class="post-meta">In <span>Anti-Aging</span> · 02. April 2026</span>
+      <h2><a href="blog-post-hyaluron.html">Wunderwaffe Hyaluronsäure: Mythos oder Pflicht-Wirkstoff?</a></h2>
+      <p class="post-excerpt">Wie tief dringt sie wirklich in die Haut ein? Alles, was Sie über die richtige Anwendung von Seren wissen müssen.</p>
+      <a href="blog-post-hyaluron.html" class="read-more">Artikel lesen</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER STRIP -->
+<section class="newsletter-strip">
+  <div class="reveal">
+    <h3>Nichts mehr <em>verpassen</em></h3>
+    <p>Melde dich für unser Journal an und erhalte exklusive Beauty-Tipps und Angebote vor allen anderen.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Deine E-Mail-Adresse">
+      <button type="submit">Abonnieren</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="kosmetik-studio.html" class="footer-brand-logo">Lumière <span>Beauty</span></a>
+      <p>Premium kosmetik-studio für anspruchsvolle Beauty-Treatments. Ihr Wohlort in der Innenstadt.</p>
+      <div class="social-row">
+        <a class="social-btn" href="#">IG</a><a class="social-btn" href="#">FB</a>
+        <a class="social-btn" href="#">TT</a><a class="social-btn" href="#">★</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Leistungen</h4>
+      <ul>
+        <li><a href="leistungen.html">Gesichtsbehandlung</a></li>
+        <li><a href="leistungen.html">Wimpern & Augen</a></li>
+        <li><a href="leistungen.html">Nails & Maniküre</a></li>
+        <li><a href="leistungen.html">Körperpflege</a></li>
+        <li><a href="leistungen.html">Anti-Aging</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+  <h4>Studio</h4>
+  <ul>
+    <li><a href="ueber-uns.html">Über uns</a></li>
+    <li><a href="index.html#team" class="scroll-link">Unser Team</a></li>
+    <li><a href="index.html#gallery" class="scroll-link">Galerie</a></li>
+    <li><a href="gutscheine.html">Gutscheine</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+</div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <p>Schönheitsgasse 7<br>12345 Musterstadt<br><br>+49 (0) 123 456 780<br>hallo@lumiere-beauty.de</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2024 Lumière Beauty Studio · Impressum · Datenschutz · AGB</div>
+</footer>
+
+<!-- JAVASCRIPT FOR SCROLL ANIMATIONS -->
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+  const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

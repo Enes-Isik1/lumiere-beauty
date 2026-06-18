@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leistungen | Lumière Beauty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        :root{
+            --blush:#F2D9D9;
+            --nude:#F9F0EB;
+            --dark:#1A0F0F;
+            --rose:#C97070;
+            --rose-dark:#A34F4F;
+            --warm-gray:#8A7070;
+            --gold-accent:#D4A96A;
+            --white:#FEFAF8;
+        }
+
+        body{
+            font-family:'DM Sans',sans-serif;
+            background:var(--white);
+            color:var(--dark);
+            overflow-x:hidden;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        /* NAVIGATION */
+        nav{
+            position:fixed;
+            top:0;
+            width:100%;
+            padding:1.5rem 5rem;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            background:rgba(254,250,248,.95);
+            backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(201,112,112,.1);
+            z-index:100;
+        }
+
+        /* ÄNDERUNG: Styling für das Logo als Link angepasst */
+        .nav-logo{
+            font-family:'Playfair Display',serif;
+            font-size:1.4rem;
+            color: var(--dark);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-logo span{
+            color:var(--rose);
+            font-style:italic;
+        }
+
+        .nav-links{
+            display:flex;
+            gap:2.5rem;
+            list-style:none;
+        }
+
+        .nav-links a{
+            text-decoration:none;
+            color:var(--warm-gray);
+            font-size:.8rem;
+            letter-spacing:.1em;
+            text-transform:uppercase;
+        }
+
+        .nav-links a:hover{
+            color:var(--rose);
+        }
+
+        .nav-btn{
+            background:var(--dark);
+            color:white;
+            border:none;
+            padding:.8rem 2rem;
+            cursor:pointer;
+            font-size:.8rem;
+            letter-spacing:.1em;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* HERO */
+        .hero{
+            padding-top:180px;
+            padding-bottom:120px;
+            text-align:center;
+            background:var(--nude);
+        }
+
+        .hero-tag{
+            font-size:.75rem;
+            letter-spacing:.2em;
+            text-transform:uppercase;
+            color:var(--rose);
+            margin-bottom:1.5rem;
+            display:block;
+        }
+
+        .hero h1{
+            font-family:'Playfair Display',serif;
+            font-size:4rem;
+            font-weight:400;
+            line-height:1.2;
+        }
+
+        .hero h1 em{
+            color:var(--rose);
+            font-style:italic;
+        }
+
+        .hero p{
+            max-width:650px;
+            margin:2rem auto 0;
+            line-height:1.9;
+            color:var(--warm-gray);
+            font-weight:300;
+        }
+
+        /* SERVICES */
+        .services{
+            padding:8rem 5rem;
+        }
+
+        .services-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:2rem;
+            max-width:1200px;
+            margin:auto;
+        }
+
+        .service-card{
+            background:white;
+            border:1px solid rgba(201,112,112,.15);
+            overflow:hidden;
+            transition:.3s;
+        }
+
+        .service-card:hover{
+            transform:translateY(-8px);
+        }
+
+        .service-card img{
+            width:100%;
+            height:320px;
+            object-fit:cover;
+        }
+
+        .service-body{
+            padding:2.5rem;
+        }
+
+        .service-name{
+            font-family:'Playfair Display',serif;
+            font-size:2rem;
+            margin-bottom:1rem;
+        }
+
+        .service-desc{
+            line-height:1.9;
+            color:var(--warm-gray);
+            margin-bottom:2rem;
+            font-weight:300;
+        }
+
+        .service-list{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:1rem;
+            margin-bottom:2rem;
+        }
+
+        .service-list li{
+            color:var(--warm-gray);
+        }
+
+        .price{
+            font-family:'Playfair Display',serif;
+            font-size:2rem;
+            color:var(--rose);
+        }
+
+        .from{
+            font-size:.75rem;
+            letter-spacing:.15em;
+            text-transform:uppercase;
+            color:var(--warm-gray);
+        }
+
+        .leistungen{ 
+            max-width:900px; 
+            margin:auto; 
+            padding:7rem 0; 
+        }
+        
+        .accordion-item { 
+            border-bottom:1px solid rgba(201,112,112,.2); 
+        }
+        
+        .accordion-header { 
+            width:100%; 
+            padding:2rem 0; 
+            background:none; 
+            border:none;
+            display:flex; 
+            justify-content:space-between; 
+            align-items:center; 
+            cursor:pointer;
+            font-family:'Playfair Display',serif; 
+            font-size:2rem; 
+            font-weight:400; 
+            color:var(--dark); 
+            transition:.3s; 
+        }
+        
+        .accordion-header:hover { 
+            color:var(--rose); 
+        }
+        
+        .accordion-content { 
+            max-height:0; 
+            overflow:hidden; 
+            transition:.4s ease; 
+        }
+        
+        .accordion-content ul { 
+            padding-bottom:2rem; 
+            list-style:none; 
+        }
+        
+        .accordion-content li { 
+            padding:.8rem 0; 
+            font-size:.9rem; 
+            color:var(--warm-gray); 
+            border-bottom: 1px solid rgba(0,0,0,.05); 
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* CTA */
+        .cta{
+            background:var(--dark);
+            padding:7rem 2rem;
+            text-align:center;
+        }
+
+        .cta h2{
+            font-family:'Playfair Display',serif;
+            font-size:3rem;
+            font-weight:400;
+            color:white;
+            margin-bottom:1.5rem;
+        }
+
+        .cta h2 em{
+            font-style:italic;
+            color:var(--gold-accent);
+        }
+
+        .cta p{
+            max-width:600px;
+            margin:auto;
+            line-height:1.9;
+            color:rgba(255,255,255,.6);
+        }
+
+        .cta-btn{
+            display: inline-block;
+            margin-top:2.5rem;
+            padding:1rem 2.8rem;
+            background:white;
+            color: var(--dark);
+            text-decoration: none;
+            cursor:pointer;
+            font-size:.8rem;
+            letter-spacing:.1em;
+            border: none;
+            transition: .3s;
+        }
+        
+        .cta-btn:hover {
+            background: var(--nude);
+        }
+
+        /* FOOTER */
+        footer{
+            background:#130909;
+            padding:4rem 5rem;
+            text-align:center;
+            color:rgba(255,255,255,.4);
+            font-size:.8rem;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:900px){
+            nav{
+                padding:1.5rem 2rem;
+            }
+            .nav-links{
+                display:none;
+            }
+            .services{
+                padding:5rem 2rem;
+            }
+            .services-grid{
+                grid-template-columns:1fr;
+            }
+            .hero h1{
+                font-size:3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="Kosmetik Studio.html" class="nav-logo">
+            Lumière <span>Beauty</span>
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="Kosmetik Studio.html">Startseite</a></li>
+            <li><a href="Kosmetik Studio.html#booking">Kontakt</a></li>
+        </ul>
+        <a href="Kosmetik Studio.html#booking" class="nav-btn">Termin buchen</a>
+    </nav>
+
+    <section class="hero">
+        <span class="hero-tag">Unsere Leistungen</span>
+        <h1>Beauty-Expertise für<br><em>deine Schönheit</em></h1>
+        <p>Entdecken Sie exklusive Treatments, individuelle Pflegekonzepte und luxuriöse Beauty-Momente bei Lumière Beauty.</p>
+    </section>
+
+    <section class="leistungen">
+        <div class="accordion-item">
+            <button class="accordion-header">Beratung & Diagnostik<span>ab 0€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Kosmetische Check-ups & Behandlungspläne</span> <span>0€</span></li>
+                    <li><span>Produktberatung/Skincare-Routinen</span> <span>25€</span></li>
+                    <li><span>Hautanalyse</span> <span>39€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Epilation/ Depilation<span>ab 20€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Waxing (Warm- & Kaltwachs)</span> <span>20€</span></li>
+                    <li><span>IPL-Behandlung</span> <span>29€</span></li>
+                    <li><span>Sugaring</span> <span>35€</span></li>
+                    <li><span>Laser- Haarentfernung</span> <span>59€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Make-up & Styling<span>ab 55€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Tages- und Abend Make-up</span> <span>55€</span></li>
+                    <li><span>Make-up Beratung & Farbtypanalyse</span> <span>79€</span></li>
+                    <li><span>Lash- & Brow-styling</span> <span>110€</span></li>
+                    <li><span>Braut Make-up/ Event-styling</span> <span>180€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Permanent Make-up & Pigmentierung<span>ab 290€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Lidstrich- Pigmentierung</span> <span>290€</span></li>
+                    <li><span>Microblading</span> <span>390€</span></li>
+                    <li><span>Powder Brows/ Ombre Brows</span> <span>420€</span></li>
+                    <li><span>Lippenpigmentierung</span> <span>450€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Gesichtsbehandlungen<span>ab 50€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Klassische Gesichtsbehandlung</span> <span>50€</span></li>
+                    <li><span>Tiefenreinigung</span> <span>60€</span></li>
+                    <li><span>Feuchtigkeitsbehandlung</span> <span>65€</span></li>
+                    <li><span>Anti-Aging Facial</span> <span>70€</span></li>
+                    <li><span>Microneedling</span> <span>75€</span></li>
+                    <li><span>Fruchtsäurepeeling</span> <span>80€</span></li>
+                    <li><span>Aknebehandlung</span> <span>90€</span></li>
+                    <li><span>Glow Facial</span> <span>140€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Nails & Maniküre<span>ab 29€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Klassische Maniküre</span> <span>32€</span></li>
+                    <li><span>Gel-Nägel</span> <span>65€</span></li>
+                    <li><span>Shellac</span> <span>45€</span></li>
+                    <li><span>French Nails</span> <span>49€</span></li>
+                    <li><span>Nail Art</span> <span>ab 15€</span></li>
+                    <li><span>Spa-Maniküre</span> <span>48€</span></li>
+                    <li><span>Pediküre</span> <span>39€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Augen & Wimpern<span>ab 15€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Wimpernverlängerung</span> <span>120€</span></li>
+                    <li><span>Lash Lifting</span> <span>55€</span></li>
+                    <li><span>Brow Lifting</span> <span>55€</span></li>
+                    <li><span>Augenbrauenkorrektur</span> <span>15€</span></li>
+                    <li><span>Henna Brows</span> <span>39€</span></li>
+                    <li><span>Wimpern färben</span> <span>15€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Körperpflege<span>ab 45€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Body Scrub</span> <span>45€</span></li>
+                    <li><span>Körperpeeling</span> <span>45€</span></li>
+                    <li><span>Rückenbehandlung</span> <span>55€</span></li>
+                    <li><span>Body Wrap</span> <span>59€</span></li>
+                    <li><span>Hot-Stone-Massage</span> <span>75€</span></li>
+                    <li><span>Aromatherapie</span> <span>85€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Wellness & Entspannung<span>ab 39€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Gesichtsmassage</span> <span>39€</span></li>
+                    <li><span>Sauna-/Dampfbad-Konzepte</span> <span>40€</span></li>
+                    <li><span>Ganzkörpermassagen</span> <span>75€</span></li>
+                    <li><span>Spa-Rituale</span> <span>115€</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Haarbezogene Zusatzleistungen<span>ab 29€</span></button>
+            <div class="accordion-content">
+                <ul>
+                    <li><span>Haarpflegekuren</span> <span>29€</span></li>
+                    <li><span>Scalp- Treatments</span> <span>45€</span></li>
+                    <li><span>Blow-Dry/ Styling</span> <span>49€</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Ihre Schönheit verdient <em>das Beste</em></h2>
+        <p>Lassen Sie sich von unserem erfahrenen Team verwöhnen und vereinbaren Sie noch heute Ihren persönlichen Termin.</p>
+        <a href="index.html#booking" class="cta-btn">TERMIN VEREINBAREN</a>
+    </section>
+
+    <footer>
+        &copy; 2024 Lumière Beauty Studio · Alle Rechte vorbehalten
+    </footer>
+
+    <script>
+        const accordion = document.querySelectorAll(".accordion-header");
+        accordion.forEach(item => { 
+            item.addEventListener("click", ()=> {
+                const content = item.nextElementSibling;
+                if(content.style.maxHeight) { 
+                    content.style.maxHeight = null; 
+                } else { 
+                    content.style.maxHeight = content.scrollHeight + "px"; 
+                }
+            });
+        });
+    </script>
+</body>
+</html>
