@@ -511,27 +511,44 @@
   </div>
   <div class="treatments-grid">
     <div class="treatment-tabs">
-      <div class="tab active"><div class="tab-name">Signature Facial</div><div class="tab-price">ab € 95</div></div>
-      <div class="tab"><div class="tab-name">Lash Lifting</div><div class="tab-price">ab € 65</div></div>
-      <div class="tab"><div class="tab-name">Full Body Scrub</div><div class="tab-price">ab € 85</div></div>
-      <div class="tab"><div class="tab-name">Gel Manicure</div><div class="tab-price">ab € 45</div></div>
-      <div class="tab"><div class="tab-name">Anti-Aging Treatment</div><div class="tab-price">ab € 120</div></div>
-    </div>
+  <div class="tab active" data-title="Lumière Signature Facial" data-text="Unser exklusives Treatment kombiniert modernste Microdermabrasion mit tiefer Feuchtigkeitspflege – sichtbar strahlend schon nach der ersten Anwendung." data-duration="75 Minuten" data-price="€ 95" data-img="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80">
+    <div class="tab-name">Signature Facial</div>
+    <div class="tab-price">ab € 95</div>
+  </div>
+  <div class="tab" data-title="Lash Lifting Professional" data-text="Perfekter Schwung für deine eigenen Wimpern. Inklusive Färben und reichhaltiger Keratin-Pflege für einen wachen, strahlenden Blick ohne Mascara." data-duration="45 Minuten" data-price="€ 65" data-img="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80">
+    <div class="tab-name">Lash Lifting</div>
+    <div class="tab-price">ab € 65</div>
+  </div>
+  <div class="tab" data-title="Full Body Luxury Scrub" data-text="Ein verwöhnendes Ganzkörperpeeling mit Meersalz und ätherischen Ölen. Entfernt sanft Hautschüppchen und regt die Durchblutung an. Für samtweiche Haut." data-duration="60 Minuten" data-price="€ 85" data-img="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80">
+    <div class="tab-name">Full Body Scrub</div>
+    <div class="tab-price">ab € 85</div>
+  </div>
+  <div class="tab" data-title="Premium Gel Manicure" data-text="Präzises Formen, Nagelhautpflege und ein langanhaltender Gel-Lack in deiner Wunschfarbe. Kratzfest und glänzend für mehrere Wochen." data-duration="50 Minuten" data-price="€ 45" data-img="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80">
+    <div class="tab-name">Gel Manicure</div>
+    <div class="tab-price">ab € 45</div>
+  </div>
+  <div class="tab" data-title="Ultimate Anti-Aging Treatment" data-text="Hochwirksame Ultraschall-Behandlung kombiniert mit Hyaluron-Einschleusung. Mindert feine Linien sofort und polstert die Haut von innen auf." data-duration="90 Minuten" data-price="€ 120" data-img="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80">
+    <div class="tab-name">Anti-Aging Treatment</div>
+    <div class="tab-price">ab € 120</div>
+  </div>
+</div>
     <div class="treatment-detail">
-      <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80" alt="Signature Facial">
-      <h3 class="treatment-title">Lumière Signature Facial</h3>
-      <p class="treatment-text">Unser exklusives Treatment kombiniert modernste Microdermabrasion mit tiefer Feuchtigkeitspflege – sichtbar strahlend schon nach der ersten Anwendung.</p>
-      <div class="treatment-includes">
-        <div class="treatment-item">Tiefenreinigung und Dampfbad</div>
-        <div class="treatment-item">Microdermabrasion mit Diamantkopf</div>
-        <div class="treatment-item">Individuelles Serum und Mask</div>
-        <div class="treatment-item">Gesichts-Drainage-Massage</div>
-        <div class="treatment-item">Abschlusspflege mit LSF</div>
-      </div>
-      <span class="treatment-duration">⏱ Dauer: 75 Minuten</span>
-      <span class="treatment-price-big">€ 95</span>
-      <a href="#booking" class="btn-dark">Jetzt buchen</a>
-    </div>
+  <img id="detail-img" src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80" alt="Treatment Image">
+  <h3 class="treatment-title" id="detail-title">Lumière Signature Facial</h3>
+  <p class="treatment-text" id="detail-text">Unser exklusives Treatment kombiniert modernste Microdermabrasion mit tiefer Feuchtigkeitspflege – sichtbar strahlend schon nach der ersten Anwendung.</p>
+  
+  <div class="treatment-includes">
+    <div class="treatment-item">Tiefenreinigung und Dampfbad</div>
+    <div class="treatment-item">Microdermabrasion mit Diamantkopf</div>
+    <div class="treatment-item">Individuelles Serum und Mask</div>
+    <div class="treatment-item">Gesichts-Drainage-Massage</div>
+    <div class="treatment-item">Abschlusspflege mit LSF</div>
+  </div>
+  
+  <span class="treatment-duration" id="detail-duration">⏱ Dauer: 75 Minuten</span>
+  <span class="treatment-price-big" id="detail-price">€ 95</span>
+  <a href="#booking" class="btn-dark">Jetzt buchen</a>
+</div>
   </div>
 </section>
 
@@ -650,6 +667,31 @@ document.querySelectorAll('.scroll-link').forEach(link => {
         history.pushState(null, null, `#${targetId}`);
       }
     }
+  });
+});
+
+// JavaScript für das Umschalten der Preislisten-Tabs
+document.querySelectorAll('.tab').forEach(selectedTab => {
+  selectedTab.addEventListener('click', function() {
+    // 1. "active"-Klasse bei allen Tabs entfernen
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    
+    // 2. "active"-Klasse dem geklickten Tab hinzufügen
+    this.classList.add('active');
+    
+    // 3. Daten aus den Attributen auslesen
+    const title = this.getAttribute('data-title');
+    const text = this.getAttribute('data-text');
+    const duration = this.getAttribute('data-duration');
+    const price = this.getAttribute('data-price');
+    const imgUrl = this.getAttribute('data-img');
+    
+    // 4. Die Inhalte im Detail-Bereich live austauschen
+    document.getElementById('detail-title').innerText = title;
+    document.getElementById('detail-text').innerText = text;
+    document.getElementById('detail-duration').innerText = `⏱ Dauer: ${duration}`;
+    document.getElementById('detail-price').innerText = price;
+    document.getElementById('detail-img').src = imgUrl;
   });
 });
 </script>
