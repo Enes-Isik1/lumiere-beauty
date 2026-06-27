@@ -92,20 +92,38 @@
   .social-btn { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: rgba(255,255,255,0.4); cursor: pointer; text-decoration: none; transition: all 0.2s; }
   .social-btn:hover { border-color: var(--rose); color: var(--rose); }
 
-  /* RESPONSIVE */
+  /* RESPONSIVE OPTIMIERUNGEN */
+ 
   @media (max-width: 968px) {
-    nav { padding: 1.5rem 2rem; }
-    .blog-header { padding: 8rem 2rem 3rem; }
-    .featured-section, .blog-grid-section { padding: 2rem; }
-    .featured-card { grid-template-columns: 1fr; }
-    .featured-content { padding: 2.5rem; }
-    .blog-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    nav { padding: 1rem 2rem; flex-direction: column; gap: 1rem; }
+    .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+    .nav-links a { font-size: 0.75rem; }
+    .nav-btn { width: 100%; max-width: 300px;}
+
+   .blog-header { padding: 10rem 2rem 3rem; }
+   .feature-section, .blog-grid-section { padding: 2rem 1.5rem; }
+   .feature-card { grid-template-columns: 1fr; }
+   .featured-img-box { aspect-ratio: 16/9; }
+   .featured-content { padding: 2rem 1rem; }
+   .featured-title { font-size: 1.8rem; }
+
+   .blog-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+   .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem 2rem; }
   }
-  @media (max-width: 640px) {
-    .blog-grid { grid-template-columns: 1fr; }
-    .newsletter-form { flex-direction: column; }
-  }
+
+      @media (max-width: 640px) {
+   .blog-grid { grid-template-colums: 1fr; gap: 2.5rem; }
+   .blog-card h2 { font-size: 1.25rem; }
+
+   .newsletter-strip { padding: 4rem 1.5rem; }
+   .newsletter-strip h3 { font-size: 1.7rem; }
+   .newsletter-form { flex-direction: column; width: 100%; }
+   .newsletter-form button { width: 100%; }
+
+   footer { padding: 4rem 1.5rem 2rem; }
+   .footer-top { grid-template-colums: 1fr; gap: 2.5rem; }
+      }
+   
 </style>
 </head>
 <body>
