@@ -39,27 +39,26 @@
 
   /* FEATURED POST (Nahtlos & Mittig integriert) */
   .featured-section { 
-    padding: 2rem 5rem 4rem; 
-    max-width: 900px; /* Schön schmal für perfekte Lesbarkeit wie ein echter Artikel */
+    padding: 4rem 5rem 2rem; 
+    max-width: 900px; 
     margin: 0 auto; 
   }
   
   .featured-card { 
     display: flex;
     flex-direction: column;
-    background: transparent; /* Macht die Box unsichtbar, verschmilzt mit dem Hintergrund */
-    border: none; /* Kein fetter Rahmen mehr */
+    background: transparent; 
+    border: none; 
     box-shadow: none; 
     overflow: visible; 
-    text-align: center; /* Zentriert den gesamten Text */
   }
   
   .featured-img-box { 
     width: 100%; 
-    aspect-ratio: 16 / 9; /* Modernes, breites Kino-Format */
+    aspect-ratio: 16 / 9; 
     overflow: hidden; 
     margin-bottom: 2.5rem; 
-    box-shadow: 0 20px 40px rgba(0,0,0,0.04); /* Eleganter, weicher Schatten fürs Bild */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.04); 
   }
   
   .featured-img-box img { 
@@ -77,8 +76,8 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Zentriert die Meta-Daten und den "Artikel lesen"-Link */
-    text-align: center;  /* Zentriert den Titel und die Beschreibung */
+    align-items: center; 
+    text-align: center;  
   }
   
   .featured-title { 
@@ -99,7 +98,7 @@
     color: var(--warm-gray); 
     font-weight: 300; 
     margin-bottom: 1.8rem; 
-    text-align: center; }
+  }
   
   .read-more { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dark); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
   .read-more::after { content: '→'; transition: transform 0.2s; }
@@ -143,19 +142,23 @@
   .social-btn { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: rgba(255,255,255,0.4); cursor: pointer; text-decoration: none; transition: all 0.2s; }
   .social-btn:hover { border-color: var(--rose); color: var(--rose); }
 
-  /* RESPONSIVE */
+  /* KORRIGIERTER RESPONSIVE BEREICH */
   @media (max-width: 968px) {
     nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; } /* Verhindert, dass das Menü das Logo zerquetscht */
     .blog-header { padding: 8rem 2rem 3rem; }
     .featured-section, .blog-grid-section { padding: 2rem; }
-    .featured-card { grid-template-columns: 1fr; }
-    .featured-content { padding: 2.5rem; }
     .blog-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
     .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    footer { padding: 4rem 2rem 2rem; }
   }
+  
   @media (max-width: 640px) {
+    .blog-header h1 { font-size: 2.2rem; }
+    .featured-title { font-size: 1.6rem; }
     .blog-grid { grid-template-columns: 1fr; }
     .newsletter-form { flex-direction: column; }
+    .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
   }
 </style>
 </head>
@@ -163,7 +166,6 @@
 
 <!-- NAVIGATION -->
 <nav id="mainNav">
-  <!-- Geändert auf index.html -->
   <a href="index.html" class="nav-logo">Lumière <span>Beauty</span></a>
   <ul class="nav-links">
     <li><a href="leistungen.html">Leistungen</a></li>
@@ -172,7 +174,6 @@
     <li><a href="kosmetik-studio.html#gallery">Galerie</a></li>
     <li><a href="blog.html" class="active">Blog</a></li>
   </ul>
-  
   <a href="kosmetik-studio.html#booking" class="nav-btn">Termin buchen</a>
 </nav>
 
@@ -187,20 +188,15 @@
 <!-- FEATURED POST (Bild oben, Text mittig darunter) -->
 <section class="featured-section reveal">
   <div class="featured-card">
-    
-    <!-- Bild jetzt als sauberer, breiter Einstieg oben -->
     <div class="featured-img-box">
       <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1000&q=80" alt="Hautpflege im Frühling">
     </div>
-    
-    <!-- Text wandert elegant und zentriert nach unten -->
     <div class="featured-content">
       <span class="post-meta">In <span>Skin Care</span> · 12. Mai 2026</span>
       <h2 class="featured-title"><a href="blog-post.html">Der ultimative Guide für den perfekten „Glow“ im Frühling</a></h2>
       <p class="post-excerpt">Unsere Haut erwacht aus dem Winterschlaf. Erfahren Sie, welche Wirkstoffe jetzt unverzichtbar sind und wie Sie Ihre Pflegeroutine perfekt auf die wärmere Jahreszeit umstellen.</p>
       <a href="blog-post.html" class="read-more">Artikel lesen</a>
     </div>
-
   </div>
 </section>
 
@@ -260,7 +256,6 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <!-- Geändert auf index.html -->
       <a href="index.html" class="footer-brand-logo">Lumière <span>Beauty</span></a>
       <p>Premium kosmetik-studio für anspruchsvolle Beauty-Treatments. Ihr Wohlort in der Innenstadt.</p>
       <div class="social-row">
@@ -282,7 +277,6 @@
       <h4>Studio</h4>
       <ul>
         <li><a href="ueber-uns.html">Über uns</a></li>
-        <!-- Bleibt auf index.html#team und index.html#gallery mit scroll-link -->
         <li><a href="kosmetik-studio.html#team" class="scroll-link">Unser Team</a></li>
         <li><a href="kosmetik-studio.html#gallery" class="scroll-link">Galerie</a></li>
         <li><a href="gutscheine.html">Gutscheine</a></li>
