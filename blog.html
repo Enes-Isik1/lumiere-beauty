@@ -37,50 +37,53 @@
   .blog-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 400; line-height: 1.2; }
   .blog-header h1 em { font-style: italic; color: var(--rose); }
 
-  /* FEATURED POST (Optisch repariert & edel) */
-  .featured-section { padding: 4rem 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  /* FEATURED POST (Nahtlos & Mittig integriert) */
+  .featured-section { 
+    padding: 2rem 5rem 4rem; 
+    max-width: 900px; /* Schön schmal für perfekte Lesbarkeit wie ein echter Artikel */
+    margin: 0 auto; 
+  }
   
   .featured-card { 
-    display: grid; 
-    grid-template-columns: 1.1fr 1fr; /* Perfekt balanciertes Verhältnis */
-    background: var(--white); 
-    border: 1px solid rgba(201, 112, 112, 0.12); 
-    overflow: hidden; 
-    align-items: center; /* Zentriert den Inhalt vertikal zum Bild */
+    display: flex;
+    flex-direction: column;
+    background: transparent; /* Macht die Box unsichtbar, verschmilzt mit dem Hintergrund */
+    border: none; /* Kein fetter Rahmen mehr */
+    box-shadow: none; 
+    overflow: visible; 
+    text-align: center; /* Zentriert den gesamten Text */
   }
   
   .featured-img-box { 
-    position: relative; 
-    width: 100%;
-    aspect-ratio: 4 / 3; /* Verhindert das unendliche Langziehen des Bildes */
+    width: 100%; 
+    aspect-ratio: 16 / 9; /* Modernes, breites Kino-Format */
     overflow: hidden; 
+    margin-bottom: 2.5rem; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.04); /* Eleganter, weicher Schatten fürs Bild */
   }
   
   .featured-img-box img { 
     width: 100%; 
     height: 100%; 
     object-fit: cover; 
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); 
+    transition: transform 0.6s ease; 
   }
   
   .featured-card:hover .featured-img-box img { transform: scale(1.02); }
   
   .featured-content { 
-    padding: 3rem 4rem; /* Sanfteres Padding für feine Ästhetik */
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
+    padding: 0; /* Keine künstlichen Abstände mehr */
+    max-width: 700px;
+    margin: 0 auto;
   }
-  
-  .post-meta { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 1rem; display: block; }
-  .post-meta span { color: var(--rose); font-weight: 500; }
   
   .featured-title { 
     font-family: 'Playfair Display', serif; 
-    font-size: 2rem; /* Leicht herabgesetzt, um harmonischer zu wirken */
+    font-size: 2.2rem; 
     font-weight: 400; 
     line-height: 1.3; 
-    margin-bottom: 1rem; 
+    margin-top: 0.8rem;
+    margin-bottom: 1.2rem; 
   }
   
   .featured-title a { color: var(--dark); text-decoration: none; transition: color 0.2s; }
@@ -130,46 +133,28 @@
   .social-btn { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: rgba(255,255,255,0.4); cursor: pointer; text-decoration: none; transition: all 0.2s; }
   .social-btn:hover { border-color: var(--rose); color: var(--rose); }
 
-  /* RESPONSIVE OPTIMIERUNGEN */
- 
+  /* RESPONSIVE */
   @media (max-width: 968px) {
-    nav { padding: 1rem 2rem; flex-direction: column; gap: 1rem; }
-    .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
-    .nav-links a { font-size: 0.75rem; }
-    .nav-btn { width: 100%; max-width: 300px;}
-
-   .blog-header { padding: 10rem 2rem 3rem; }
-   .feature-section, .blog-grid-section { padding: 2rem 1.5rem; }
-   .feature-card { grid-template-columns: 1fr; }
-   .featured-img-box { aspect-ratio: 16/9; }
-   .featured-content { padding: 2rem 1rem; }
-   .featured-title { font-size: 1.8rem; }
-
-   .blog-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
-   .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem 2rem; }
+    nav { padding: 1.5rem 2rem; }
+    .blog-header { padding: 8rem 2rem 3rem; }
+    .featured-section, .blog-grid-section { padding: 2rem; }
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-content { padding: 2.5rem; }
+    .blog-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
   }
-
-      @media (max-width: 640px) {
-   .blog-grid { grid-template-colums: 1fr; gap: 2.5rem; }
-   .blog-card h2 { font-size: 1.25rem; }
-
-   .newsletter-strip { padding: 4rem 1.5rem; }
-   .newsletter-strip h3 { font-size: 1.7rem; }
-   .newsletter-form { flex-direction: column; width: 100%; }
-   .newsletter-form button { width: 100%; }
-
-   footer { padding: 4rem 1.5rem 2rem; }
-   .footer-top { grid-template-colums: 1fr; gap: 2.5rem; }
-      }
-   
+  @media (max-width: 640px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .newsletter-form { flex-direction: column; }
+  }
 </style>
 </head>
 <body>
 
 <!-- NAVIGATION -->
 <nav id="mainNav">
-  
-  <a href="kosmetik-studio.html" class="nav-logo">Lumière <span>Beauty</span></a>
+  <!-- Geändert auf index.html -->
+  <a href="index.html" class="nav-logo">Lumière <span>Beauty</span></a>
   <ul class="nav-links">
     <li><a href="leistungen.html">Leistungen</a></li>
     <li><a href="ueber-uns.html">Über uns</a></li>
@@ -189,18 +174,23 @@
   </div>
 </header>
 
-<!-- FEATURED POST -->
+<!-- FEATURED POST (Bild oben, Text mittig darunter) -->
 <section class="featured-section reveal">
   <div class="featured-card">
+    
+    <!-- Bild jetzt als sauberer, breiter Einstieg oben -->
     <div class="featured-img-box">
       <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1000&q=80" alt="Hautpflege im Frühling">
     </div>
+    
+    <!-- Text wandert elegant und zentriert nach unten -->
     <div class="featured-content">
       <span class="post-meta">In <span>Skin Care</span> · 12. Mai 2026</span>
       <h2 class="featured-title"><a href="blog-post.html">Der ultimative Guide für den perfekten „Glow“ im Frühling</a></h2>
       <p class="post-excerpt">Unsere Haut erwacht aus dem Winterschlaf. Erfahren Sie, welche Wirkstoffe jetzt unverzichtbar sind und wie Sie Ihre Pflegeroutine perfekt auf die wärmere Jahreszeit umstellen.</p>
       <a href="blog-post.html" class="read-more">Artikel lesen</a>
     </div>
+
   </div>
 </section>
 
