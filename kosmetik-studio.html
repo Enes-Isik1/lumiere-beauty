@@ -197,14 +197,14 @@
   *, *::before, *::after { max-width: 100% !important; box-sizing: border-box !important; }
 
   /* Navigation & Hamburger Integration */
-  nav { padding: 1rem !important; height: 70px !important; display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; }
+  nav { padding: 1rem !important; height: 70px !important; display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; z-index: 120 !important; }
   .nav-links { display: none !important; } 
   nav > .nav-btn { display: none !important; } 
   .nav-logo { font-size: 1.1rem !important; }
-  .hamburger-menu { display: flex !important; } 
+ 
+  .hamburger-menu { display: flex !important; z-index: 130 !important; position: relative !important; } 
 
   /* Hero Sektion komplett entzerren */
-
   .hero { display: flex !important; flex-direction: column !important; min-height: auto !important; padding-top: 70px !important; }
   .hero-content { padding: 3rem 1.5rem !important; text-align: center; }
   .hero-tag { justify-content: center; } 
@@ -217,25 +217,21 @@
   .floating-badge { top: auto !important; bottom: 1rem !important; right: 1rem !important; padding: 0.6rem 1rem !important; font-size: 0.7rem !important; }
 
   /* "Unsere Leistungen" */
-
   .services { padding: 4rem 1rem !important; }
   .services-grid { display: flex !important; flex-direction: column !important; gap: 2rem !important; background: transparent !important; }
   .service-card { width: 100% !important; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-bottom: 2px solid var(--rose); }
 
   /* Über Lumiere Strip */
-
   .about-strip { display: flex !important; flex-direction: column !important; }
   .about-strip-img { min-height: 250px !important; height: 250px !important; }
   .about-strip-content { padding: 3rem 1.5rem !important; text-align: center; }
   .about-strip-content .section-tag { justify-content: center !important; }
 
   /* Team Sektion */
-
   .team { padding: 4rem 1rem !important; }  
   .team-grid { display: flex !important; flex-direction: column !important; gap: 3rem !important; }
 
   /* Preisliste */
-
   .treatments { padding: 4rem 1rem !important; }
   .treatments-grid { display: flex !important; flex-direction: column !important; gap: 2rem !important; }
   .treatment-tabs { flex-direction: row !important; overflow-x: auto; width: 100% !important; padding-bottom: 0.5rem; -webkit-overflow-scrolling: touch; }
@@ -246,7 +242,6 @@
   .treatment-price-big { font-size: 2rem !important; }
 
   /* Buchung */
-
   .booking { display: flex !important; flex-direction: column !important; padding: 3rem 1rem !important; gap: 3rem !important; }
   .booking-info { text-align: center; }
   .booking-info .section-tag { justify-content: center !important; }
@@ -255,12 +250,10 @@
   input, select, textarea { font-size: 16px !important;  }
 
   /* Galerie */
-
   .gallery { display: flex !important; flex-direction: column !important;  grid-template-rows: none !important; }
   .gallery-item { height: 250px !important; width: 100% !important; }
 
   /* Footer */
-
   footer { padding: 4rem 1.5rem 2rem !important; }
   .footer-top { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 2.5rem 1.5rem !important; text-align: left; }
   .social-row { justify-content: flex-start; }
