@@ -38,15 +38,45 @@
         /* LEISTUNGEN ACCORDION SECTION */
         .leistungen{  max-width:1000px;  margin:auto; padding:7rem 2rem; }
         .accordion-item { border-bottom:1px solid rgba(201,112,112,.15); }
-        .accordion-header { width:100%; padding:2.2rem 0; background:none; border:none; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:400; color:var(--dark); text-align: left; transition:.3s; }
-        .accordion-header:hover { color:var(--rose); }
+        
+        /* Flexbox-Struktur für Header optimiert */
+        .accordion-header { 
+            width:100%; 
+            padding:2.2rem 0; 
+            background:none; 
+            border:none; 
+            display:flex; 
+            justify-content:space-between; 
+            align-items:center; 
+            cursor:pointer; 
+            color:var(--dark); 
+            text-align: left; 
+            transition:.3s; 
+            gap: 2rem;
+        }
+        
+        /* Titel nimmt den verfügbaren Platz links ein */
+        .accordion-title {
+            font-family:'Playfair Display',serif; 
+            font-size:1.8rem; 
+            font-weight:400;
+            flex: 1; 
+        }
+        .accordion-header:hover .accordion-title { color:var(--rose); }
+
+        /* Rechter Block fixiert Preis + Icon als unzertrennliche Einheit */
+        .accordion-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-shrink: 0; /* Verhindert das Zusammendrücken bei langen Texten */
+        }
 
         /* Styling für die "ab ... €" Anzeige */
         .header-price-tag { 
             font-size: 1.4rem; 
             font-family: 'Playfair Display', serif; 
             color: var(--dark); 
-            margin-left: auto; /* Schiebt den Preis auf Desktop & Mobil ganz nach rechts */
             white-space: nowrap; 
             display: flex; 
             align-items: center; 
@@ -56,9 +86,15 @@
         /* Das rote 'ab' */
         .header-price-tag .ab-prefix { color: var(--rose); font-family: 'DM Sans', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
 
-        /* Kleiner Indikator für Touch-Feedback */
-        .accordion-header::after { content: '+'; font-family: 'DM Sans', sans-serif; font-size: 1.3rem; color: var(--warm-gray); margin-left: 1.5rem; transition: transform 0.3s ease; }
-        .accordion-item.active .accordion-header::after { content: '−'; }
+        /* Das Icon wird nun separat im HTML über ein Element gelöst für bombenfeste Platzierung */
+        .accordion-icon { 
+            font-family: 'DM Sans', sans-serif; 
+            font-size: 1.3rem; 
+            color: var(--warm-gray); 
+            width: 15px;
+            text-align: center;
+        }
+
         .accordion-content { max-height:0; overflow:hidden; transition: max-height .4s cubic-bezier(0.25, 1, 0.5, 1); }
         .accordion-content ul { padding-bottom:2rem; list-style:none; }
         .accordion-content li { padding:1rem 0; font-size:.95rem; color:var(--warm-gray); border-bottom: 1px solid rgba(201,112,112,.06); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
@@ -85,9 +121,12 @@
             .hero h1{ font-size:2.4rem; }
             .hero p { font-size: 0.95rem; margin-top: 1.5rem; }
             .leistungen { padding: 4rem 1.5rem; }
-            .accordion-header { padding: 1.6rem 0; font-size: 1.25rem; }
+            .accordion-header { padding: 1.6rem 0; gap: 1rem; }
+            .accordion-title { font-size: 1.25rem; }
+            .accordion-meta { gap: 1rem; }
             .header-price-tag { font-size: 1.1rem; }
             .header-price-tag .ab-prefix { font-size: 0.65rem; }
+            .accordion-icon { font-size: 1.1rem; }
             .accordion-content li { font-size: 0.9rem; padding: 0.9rem 0; }
             .cta h2 { font-size: 2rem; }
             footer { padding: 3rem 1.5rem; }
@@ -117,8 +156,11 @@
         
         <div class="accordion-item">
             <button class="accordion-header">
-                Beratung & Diagnostik
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>0€</span>
+                <span class="accordion-title">Beratung & Diagnostik</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>0€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -131,8 +173,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Epilation/ Depilation
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>20€</span>
+                <span class="accordion-title">Epilation/ Depilation</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>20€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -146,8 +191,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Make-up & Styling
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>55€</span>
+                <span class="accordion-title">Make-up & Styling</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>55€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -161,8 +209,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Permanent Make-up & Pigmentierung
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>290€</span>
+                <span class="accordion-title">Permanent Make-up & Pigmentierung</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>290€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -176,8 +227,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Gesichtsbehandlungen
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>50€</span>
+                <span class="accordion-title">Gesichtsbehandlungen</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>50€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -195,8 +249,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Nails & Maniküre
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>29€</span>
+                <span class="accordion-title">Nails & Maniküre</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>29€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -213,8 +270,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Augen & Wimpern
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>15€</span>
+                <span class="accordion-title">Augen & Wimpern</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>15€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -230,8 +290,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Körperpflege
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>45€</span>
+                <span class="accordion-title">Körperpflege</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>45€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -247,8 +310,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Wellness & Entspannung
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>39€</span>
+                <span class="accordion-title">Wellness & Entspannung</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>39€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -262,8 +328,11 @@
 
         <div class="accordion-item">
             <button class="accordion-header">
-                Haarbezogene Zusatzleistungen
-                <span class="header-price-tag"><span class="ab-prefix">ab</span>29€</span>
+                <span class="accordion-title">Haarbezogene Zusatzleistungen</span>
+                <div class="accordion-meta">
+                    <span class="header-price-tag"><span class="ab-prefix">ab</span>29€</span>
+                    <span class="accordion-icon">+</span>
+                </div>
             </button>
             <div class="accordion-content">
                 <ul>
@@ -291,13 +360,16 @@
             header.addEventListener("click", () => {
                 const item = header.parentElement;
                 const content = header.nextElementSibling;
+                const icon = header.querySelector(".accordion-icon");
                 
                 item.classList.toggle("active");
                 
                 if(content.style.maxHeight) { 
                     content.style.maxHeight = null; 
+                    icon.textContent = "+";
                 } else { 
                     content.style.maxHeight = content.scrollHeight + "px"; 
+                    icon.textContent = "−";
                 }
             });
         });
