@@ -197,14 +197,29 @@
   *, *::before, *::after { max-width: 100% !important; box-sizing: border-box !important; }
 
   /* Navigation & Hamburger Integration */
+
   nav { padding: 1rem !important; height: 70px !important; display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; z-index: 120 !important; }
   .nav-links { display: none !important; } 
   nav > .nav-btn { display: none !important; } 
-  .nav-logo { font-size: 1.1rem !important; }
- 
+  .nav-logo { font-size: 1.1rem !important; } 
+  
   .hamburger-menu { display: flex !important; z-index: 130 !important; position: relative !important; } 
+ 
+  .hamburger-menu.active span { background-color: var(--white) !important; }
+
+  .mobile-nav-overlay { position: fixed;  top: 0;  right: -60%; width: 60%; height: 100vh; background: var(--dark); box-shadow: -5px 0 25px rgba(0, 0, 0, 0.25); z-index: 110;  display: flex;  flex-direction: column;  justify-content: center; align-items: flex-start;  padding: 5rem 2rem 3rem 2rem; transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+  .mobile-nav-overlay.active { right: 0; }
+  .mobile-links {  list-style: none;  text-align: left;  display: flex;  flex-direction: column;  gap: 0;  margin-bottom: 2.5rem;  width: 100%;  }
+  .mobile-links li { width: 100%; border-bottom: 1px solid rgba(254, 250, 248, 0.08); }
+  .mobile-links a {  font-family: 'Playfair Display', serif;  font-size: 1.35rem; color: var(--white); text-decoration: none;  transition: color 0.2s; 
+                     display: block; padding: 1rem 0; white-space: nowrap; letter-spacing: 0.03em; }
+  .mobile-links a:hover { color: var(--blush); }
+  .mobile-nav-btn { width: 100%; background: var(--rose); color: white; border: none; padding: 1rem 1.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; 
+                    text-transform: uppercase; cursor: pointer; text-decoration: none; text-align: center; transition: background 0.2s; white-space: nowrap; margin-top: auto; }
+  .mobile-nav-btn:hover { background: var(--rose-dark); }
 
   /* Hero Sektion komplett entzerren */
+
   .hero { display: flex !important; flex-direction: column !important; min-height: auto !important; padding-top: 70px !important; }
   .hero-content { padding: 3rem 1.5rem !important; text-align: center; }
   .hero-tag { justify-content: center; } 
